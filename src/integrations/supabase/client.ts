@@ -67,7 +67,7 @@ function createSupabaseClient() {
     //   fetch: createSupabaseFetch(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY),
     // },
     auth: {
-      storage: brokeredPreviewStorage(),
+      //storage: brokeredPreviewStorage(),
       persistSession: true,
       autoRefreshToken: true,
     },
