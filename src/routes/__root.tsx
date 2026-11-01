@@ -98,10 +98,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         property: "og:image",
-        content: "https://damani-portfolio.vercel.app/social-preview.png",
+        content:
+          "https://damani-portfolio.vercel.app/social-preview.png?v=2",
       },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
+      { property: "og:image:type", content: "image/png" },
       {
         property: "og:image:alt",
         content: "Damani Beckford — Product Designer",
@@ -120,7 +122,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       {
         name: "twitter:image",
-        content: "https://damani-portfolio.vercel.app/social-preview.png",
+        content:
+          "https://damani-portfolio.vercel.app/social-preview.png?v=2",
       },
     ],
     links: [
@@ -166,8 +169,15 @@ function RootComponent() {
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event) => {
-      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+      if (
+        event !== "SIGNED_IN" &&
+        event !== "SIGNED_OUT" &&
+        event !== "USER_UPDATED"
+      )
+        return;
+
       router.invalidate();
+
       if (event !== "SIGNED_OUT") {
         queryClient.invalidateQueries({ queryKey: ["admin"] });
       }
