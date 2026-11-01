@@ -99,7 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:image",
         content:
-          "https://damani-portfolio.vercel.app/social-preview.png?v=2",
+          "https://damani-portfolio.vercel.app/social-preview-v2.png?v=2",
       },
       { property: "og:image:width", content: "1200" },
       { property: "og:image:height", content: "630" },
@@ -123,7 +123,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         name: "twitter:image",
         content:
-          "https://damani-portfolio.vercel.app/social-preview.png?v=2",
+          "https://damani-portfolio.vercel.app/social-preview-v2.png?v=2",
       },
     ],
     links: [
