@@ -1,3 +1,4 @@
+
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import {
   Outlet,
@@ -35,6 +36,7 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
+
   useEffect(() => {
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
@@ -42,7 +44,9 @@ function ErrorComponent({ error, reset }: ErrorComponentProps) {
   return (
     <main className="container-page flex min-h-[70vh] flex-col justify-center py-24">
       <h1 className="display text-5xl">This page didn’t load.</h1>
-      <p className="mt-3 text-muted-foreground">Something went wrong. Try again, or head back home.</p>
+      <p className="mt-3 text-muted-foreground">
+        Something went wrong. Try again, or head back home.
+      </p>
       <div className="mt-8 flex gap-6">
         <button
           onClick={() => {
@@ -66,21 +70,74 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
+
+      // Page metadata
       { title: "Damani Beckford — Product Designer" },
-      { name: "description", content: "Portfolio of Damani Beckford, Product Designer with a software development background." },
+      {
+        name: "description",
+        content:
+          "Portfolio of Damani Beckford, Product Designer with a software development background.",
+      },
       { name: "author", content: "Damani Beckford" },
+
+      // Open Graph / social sharing metadata
       { property: "og:type", content: "website" },
+      { property: "og:site_name", content: "Damani Beckford" },
+      {
+        property: "og:title",
+        content: "Damani Beckford — Product Designer",
+      },
+      {
+        property: "og:description",
+        content:
+          "Product Designer with a technical foundation, focused on building thoughtful digital products and experiences.",
+      },
+      {
+        property: "og:url",
+        content: "https://damani-portfolio.vercel.app/",
+      },
+      {
+        property: "og:image",
+        content: "https://damani-portfolio.vercel.app/social-preview.png",
+      },
+      { property: "og:image:width", content: "1200" },
+      { property: "og:image:height", content: "630" },
+      {
+        property: "og:image:alt",
+        content: "Damani Beckford — Product Designer",
+      },
+
+      // Twitter / X sharing metadata
       { name: "twitter:card", content: "summary_large_image" },
+      {
+        name: "twitter:title",
+        content: "Damani Beckford — Product Designer",
+      },
+      {
+        name: "twitter:description",
+        content:
+          "Product Designer with a technical foundation, focused on building thoughtful digital products and experiences.",
+      },
+      {
+        name: "twitter:image",
+        content: "https://damani-portfolio.vercel.app/social-preview.png",
+      },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
-      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "preconnect",
+        href: "https://fonts.gstatic.com",
+        crossOrigin: "anonymous",
+      },
       {
         rel: "stylesheet",
         href: "https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap",
       },
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+
+      // Favicon
+      { rel: "icon", href: "/logo.ico", type: "image/x-icon" },
     ],
   }),
   shellComponent: RootShell,
@@ -111,8 +168,11 @@ function RootComponent() {
     const { data } = supabase.auth.onAuthStateChange((event) => {
       if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
       router.invalidate();
-      if (event !== "SIGNED_OUT") queryClient.invalidateQueries({ queryKey: ["admin"] });
+      if (event !== "SIGNED_OUT") {
+        queryClient.invalidateQueries({ queryKey: ["admin"] });
+      }
     });
+
     return () => data.subscription.unsubscribe();
   }, [router, queryClient]);
 
